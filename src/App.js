@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import "./App.css";
 import AutoSuggest from "./components/AutoSuggest";
 import InfoCard from "./components/InfoCard";
+import "./App.css";
 
 class App extends Component {
   state = {
     allPokemon: null,
     userValue: "",
     selectedIndex: null,
-    pokemonSelected: []
+    pokemonSelected: [],
   };
 
   //this is a React lifecycle method (part of react)
@@ -20,7 +20,7 @@ class App extends Component {
     this.setState({ allPokemon: data.results });
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ userValue: event.target.value });
   };
 
@@ -28,7 +28,7 @@ class App extends Component {
     this.setState({ userValue: selectedName, selectedIndex: index });
   };
 
-  handleButtonClick = async data => {
+  handleButtonClick = async (data) => {
     const response = await fetch(data[this.state.selectedIndex].url);
     const info = await response.json();
     // console.log(info) <----- uncomment this to see what data you get from this fetch request
@@ -48,7 +48,7 @@ class App extends Component {
           handleButtonClick={this.handleButtonClick}
         />
         <div className="card-container">
-          {pokemonSelected.map(pokemon => {
+          {pokemonSelected.map((pokemon) => {
             return (
               <div>
                 <InfoCard pokemonData={pokemon} />
