@@ -62,7 +62,7 @@ class App extends Component {
         <div className="card-container">
           {pokemonSelected.map((pokemon) => {
             return (
-              <div>
+              <div className="pokecard">
                 <InfoCard pokemonData={pokemon} />
               </div>
             );
