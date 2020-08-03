@@ -17,6 +17,15 @@ class App extends Component {
     const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
     const data = await response.json();
     // console.log(data.results) <--- uncomment this to see what data you get from this fetch request
+
+    if (data) {
+      for (let i = 0; i < data.results.length; i++) {
+        let capital = data.results[i].name.charAt(0).toUpperCase();
+        let split = data.results[i].name.split("")
+        split.splice(0, 1, capital)
+        data.results[i].name = split.join('')
+      }
+    }
     this.setState({ allPokemon: data.results });
   }
 
