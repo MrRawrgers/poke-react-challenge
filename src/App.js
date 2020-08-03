@@ -47,10 +47,17 @@ class App extends Component {
     const response = await fetch(data[this.state.selectedIndex].url);
     const info = await response.json();
     // console.log(info) <----- uncomment this to see what data you get from this fetch request
-    let pokeArray = this.state.pokemonSelected;
-    pokeArray.push(info);
-    this.setState({ pokemonSelected: pokeArray });
+    let pokeArray = info.name;
+    let capital = pokeArray.charAt(0).toUpperCase();
+    let split = pokeArray.split("")
+    split.splice(0, 1, capital)
+    let pokemon = split.join('')
+    info.name = pokemon
+    let array = this.state.pokemonSelected
+    array.push(info)
+    this.setState({ pokemonSelected: array });
   };
+
   render() {
     const { allPokemon, userValue, pokemonSelected } = this.state;
     return (
