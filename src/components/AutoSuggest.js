@@ -3,7 +3,7 @@ import "../autoSuggest.css";
 
 const AutoSuggest = props => {
   return (
-    <div>
+    <div className="searchlistcontainer">
       <input onChange={props.handleChange} value={props.userValue} />
       <button
         onClick={() => {
