@@ -17,7 +17,6 @@ class App extends Component {
     const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
     const data = await response.json();
     // console.log(data.results) <--- uncomment this to see what data you get from this fetch request
-    console.log(data.results)
 
     if (data) {
       for (let i = 0; i < data.results.length; i++) {
@@ -47,15 +46,17 @@ class App extends Component {
     const response = await fetch(data[this.state.selectedIndex].url);
     const info = await response.json();
     // console.log(info) <----- uncomment this to see what data you get from this fetch request
-    let pokeArray = info.name;
-    let capital = pokeArray.charAt(0).toUpperCase();
-    let split = pokeArray.split("")
-    split.splice(0, 1, capital)
-    let pokemon = split.join('')
-    info.name = pokemon
-    let array = this.state.pokemonSelected
-    array.push(info)
-    this.setState({ pokemonSelected: array });
+    if (this.state.pokemonSelected.length < 4) {
+      let poke = info.name;
+      let capital = poke.charAt(0).toUpperCase();
+      let split = poke.split("")
+      split.splice(0, 1, capital)
+      let pokemon = split.join('')
+      info.name = pokemon
+      let array = this.state.pokemonSelected
+      array.push(info)
+      this.setState({ pokemonSelected: array });
+    }
   };
 
   render() {
