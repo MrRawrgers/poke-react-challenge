@@ -16,20 +16,23 @@ class App extends Component {
   async componentDidMount() {
     const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
     const data = await response.json();
+    // console.log(data.results) <--- uncomment this to see what data you get from this fetch request
     console.log(data.results)
+
+    if (data) {
+      for (let i = 0; i < data.results.length; i++) {
+        let capital = data.results[i].name.charAt(0).toUpperCase();
+        let split = data.results[i].name.split("")
+        split.splice(0, 1, capital)
+        data.results[i].name = split.join('')
+      }
+      data.results.sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+      });
+    }
+
     this.setState({ allPokemon: data.results });
 
-    for (let i = 0; i < data.results.length; i++) {
-      let capital = data.results[i].name.charAt(0).toUpperCase();
-      let split = data.results[i].name.split("")
-      split.splice(0, 1, capital)
-      data.results[i].name = split.join('')
-      }
-
-    data.results.sort(function(a, b) {
-      return a.name.localeCompare(b.name);
-   });
-        
   }
 
   handleChange = (event) => {
@@ -44,10 +47,17 @@ class App extends Component {
     const response = await fetch(data[this.state.selectedIndex].url);
     const info = await response.json();
     // console.log(info) <----- uncomment this to see what data you get from this fetch request
-    let pokeArray = this.state.pokemonSelected;
-    pokeArray.push(info);
-    this.setState({ pokemonSelected: pokeArray });
+    let pokeArray = info.name;
+    let capital = pokeArray.charAt(0).toUpperCase();
+    let split = pokeArray.split("")
+    split.splice(0, 1, capital)
+    let pokemon = split.join('')
+    info.name = pokemon
+    let array = this.state.pokemonSelected
+    array.push(info)
+    this.setState({ pokemonSelected: array });
   };
+
   render() {
     const { allPokemon, userValue, pokemonSelected } = this.state;
     return (
