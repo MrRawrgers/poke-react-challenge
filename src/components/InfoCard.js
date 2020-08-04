@@ -21,7 +21,7 @@ const InfoCard = props => {
         );
       })}
       <div>
-        <button onClick={props.onDelete}> X</button>
+        <button onClick={props.onDelete}> REMOVE </button>
       </div>
     </div>
   );
