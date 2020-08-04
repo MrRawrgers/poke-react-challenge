@@ -30,14 +30,11 @@ class App extends Component {
         return a.name.localeCompare(b.name);
       });
     }
-
     this.setState({ allPokemon: data.results });
-
   }
 
   handleChange = (event) => {
     this.setState({ userValue: event.target.value });
-
   };
 
   handleInputClick = async (selectedName, index) => {
@@ -56,11 +53,21 @@ class App extends Component {
       let pokemon = split.join('')
       info.name = pokemon
       let array = this.state.pokemonSelected
-      array.push(info)
-      this.setState({ pokemonSelected: array });
+      let found = false;
+      for (var i = 0; i < array.length; i++) {
+        if (array[i].name == pokemon) {
+          found = true;
+          break;
+        }
+      }
+      if (found == true) {
+        return;
+      } else {
+        array.push(info)
+        this.setState({ pokemonSelected: array });
+      }
     }
   };
-
 
   handleFocus = () => {
     this.setState({
@@ -74,9 +81,6 @@ class App extends Component {
     })
   }
 
-
-
-
   handleDelete = (id) => {
     this.setState({
       pokemonSelected: this.state.pokemonSelected.filter(pokemon => pokemon.id
@@ -84,7 +88,6 @@ class App extends Component {
       )
     })
   }
-
 
   render() {
     const { allPokemon, userValue, pokemonSelected, showList } = this.state;
