@@ -9,6 +9,7 @@ class App extends Component {
     userValue: "",
     selectedIndex: null,
     pokemonSelected: [],
+    showList: false
   };
 
   //this is a React lifecycle method (part of react)
@@ -59,13 +60,28 @@ class App extends Component {
     }
   };
 
+  handleFocus = () => {
+    this.setState({
+      showList: true,
+    })
+  }
+
+  handleBlur = () => {
+    this.setState({
+      showList: false,
+    })
+  }
+
   render() {
-    const { allPokemon, userValue, pokemonSelected } = this.state;
+    const { allPokemon, userValue, pokemonSelected, showList } = this.state;
     return (
       <div>
         <AutoSuggest
           data={allPokemon}
           userValue={userValue}
+          show={showList}
+          handleFocus={this.handleFocus}
+          handleBlur={this.handleBlur}
           handleChange={this.handleChange}
           handleInputClick={this.handleInputClick}
           handleButtonClick={this.handleButtonClick}

@@ -4,7 +4,7 @@ import "../autoSuggest.css";
 const AutoSuggest = props => {
   return (
     <div className="searchlistcontainer">
-      <input onChange={props.handleChange} value={props.userValue} />
+      <input onFocus={props.handleFocus} onBlur={props.handleBlur} onChange={props.handleChange} value={props.userValue} />
       <button
         onClick={() => {
           props.handleButtonClick(props.data);
@@ -12,7 +12,9 @@ const AutoSuggest = props => {
       >
         Search for Pokemon data
       </button>
-      <div className="drop-down">
+
+
+      {props.show ? <div className="drop-down">
         {props.data ? (
           props.data.map((pokemon, index) => {
             return (
@@ -22,9 +24,9 @@ const AutoSuggest = props => {
             );
           })
         ) : (
-          <h1>Loading...</h1>
-        )}
-      </div>
+            <h1>Loading...</h1>
+          )}
+      </div> : null}
     </div>
   );
 };
