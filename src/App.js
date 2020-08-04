@@ -62,7 +62,7 @@ class App extends Component {
   render() {
     const { allPokemon, userValue, pokemonSelected } = this.state;
     return (
-      <div>
+      <div className="background">
         <AutoSuggest
           data={allPokemon}
           userValue={userValue}
