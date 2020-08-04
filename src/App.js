@@ -37,6 +37,7 @@ class App extends Component {
 
   handleChange = (event) => {
     this.setState({ userValue: event.target.value });
+
   };
 
   handleInputClick = async (selectedName, index) => {
@@ -66,11 +67,17 @@ class App extends Component {
     })
   }
 
-  handleBlur = () => {
+  handleBlur = (e) => {
     this.setState({
       showList: false,
     })
   }
+
+  // handleBlur = () => {
+  //   this.setState({
+  //     showList: false,
+  //   })
+  // }
 
   render() {
     const { allPokemon, userValue, pokemonSelected, showList } = this.state;
