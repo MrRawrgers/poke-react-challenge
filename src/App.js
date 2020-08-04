@@ -59,6 +59,14 @@ class App extends Component {
     }
   };
 
+  handleDelete = (id) => {
+    this.setState({
+      pokemonSelected: this.state.pokemonSelected.filter(pokemon => pokemon.id
+        !== id
+      )
+    })
+  }
+
   render() {
     const { allPokemon, userValue, pokemonSelected } = this.state;
     return (
@@ -74,7 +82,12 @@ class App extends Component {
           {pokemonSelected.map((pokemon) => {
             return (
               <div className="pokecard">
-                <InfoCard pokemonData={pokemon} />
+                <InfoCard
+                  pokemonData={pokemon}
+                  key={pokemon.id}
+                  onDelete={() => this.handleDelete(pokemon.id)}
+                  pokemon={pokemon}
+                />
               </div>
             );
           })}
