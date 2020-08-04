@@ -61,6 +61,7 @@ class App extends Component {
     }
   };
 
+
   handleFocus = () => {
     this.setState({
       showList: true,
@@ -73,16 +74,22 @@ class App extends Component {
     })
   }
 
-  // handleBlur = () => {
-  //   this.setState({
-  //     showList: false,
-  //   })
-  // }
+
+
+
+  handleDelete = (id) => {
+    this.setState({
+      pokemonSelected: this.state.pokemonSelected.filter(pokemon => pokemon.id
+        !== id
+      )
+    })
+  }
+
 
   render() {
     const { allPokemon, userValue, pokemonSelected, showList } = this.state;
     return (
-      <div>
+      <div className="background">
         <AutoSuggest
           data={allPokemon}
           userValue={userValue}
@@ -97,7 +104,12 @@ class App extends Component {
           {pokemonSelected.map((pokemon) => {
             return (
               <div className="pokecard">
-                <InfoCard pokemonData={pokemon} />
+                <InfoCard
+                  pokemonData={pokemon}
+                  key={pokemon.id}
+                  onDelete={() => this.handleDelete(pokemon.id)}
+                  pokemon={pokemon}
+                />
               </div>
             );
           })}

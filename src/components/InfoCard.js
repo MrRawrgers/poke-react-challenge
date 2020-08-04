@@ -20,6 +20,9 @@ const InfoCard = props => {
           </p>
         );
       })}
+      <div>
+        <button onClick={props.onDelete}> X</button>
+      </div>
     </div>
   );
 };
