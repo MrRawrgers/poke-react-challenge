@@ -32,7 +32,7 @@ class App extends Component {
 
   handleChange = (event) => {
     this.setState({
-      userValue: event.target.value,
+      userValue: this.handleCapitalize(event.target.value),
       selectedIndex: this.state.allPokemon.findIndex((el) => el.name === event.target.value)
     });
   };
