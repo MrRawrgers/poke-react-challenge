@@ -1,16 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
 body, html {
-  height: 100%;
+  height: 100vh;
   margin: 0;
   background-color: #B4CDFF;
-}
-
-.card-container {
-  display: flex;
   width: 100%;
 }
+.card-container {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+}
 .drop-down {
+  position: fixed;
+  top: 100px;
+  width: 50vw;
+  height: 700px;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -19,7 +24,8 @@ body, html {
   text-align: center;
   margin-top: 20px;
   cursor: pointer;
-  background-image: url("https://assets.pokemon.com//assets/cms2/img/misc/virtual-backgrounds/sword-shield/pokemon-in-the-wild.png")
+  border-radius: 25px;
+  background-image: url("https://assets.pokemon.com//assets/cms2/img/misc/virtual-backgrounds/sword-shield/pokemon-in-the-wild.png");
 }
 
 h3:hover {
@@ -32,20 +38,26 @@ h3:hover {
   background-color: yellow;
   color: blue;
   border-radius: 25px;
-  padding: 30px;
+  padding: 10px;
   text-align: center;
-  margin: 20px;
+  margin: 5px;
 }
 
 .searchlistcontainer {
   display: flex;
   flex-direction: column;
-  margin: 40px;
+  margin: 10px;
+  width: 50vw;
+  align-items: stretch;
+  justify-content: space-evenly;
 }
 
 input {
   font-size: 20px;
   font-family: 'Anton', sans-serif;
+  text-align: center;
+  border-radius: 25px;
+  outline:none
 }
 
 button {
@@ -55,4 +67,17 @@ button {
   font-size: 20px;
   font-family: 'Anton', sans-serif;
   cursor: pointer;
+  border-radius: 25px;
+  outline: none;
 }
+
+.search-wrapper {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+.divide {
+  height: 5px;
+}
+

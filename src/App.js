@@ -58,12 +58,12 @@ class App extends Component {
       let array = this.state.pokemonSelected
       let found = false;
       for (var i = 0; i < array.length; i++) {
-        if (array[i].name == pokemon) {
+        if (array[i].name === pokemon) {
           found = true;
           break;
         }
       }
-      if (found == true) {
+      if (found === true) {
         return;
       } else {
         array.push(info)
@@ -96,16 +96,18 @@ class App extends Component {
     const { allPokemon, userValue, pokemonSelected, showList } = this.state;
     return (
       <div className="background">
-        <AutoSuggest
-          data={allPokemon}
-          userValue={userValue}
-          show={showList}
-          handleFocus={this.handleFocus}
-          handleBlur={this.handleBlur}
-          handleChange={this.handleChange}
-          handleInputClick={this.handleInputClick}
-          handleButtonClick={this.handleButtonClick}
-        />
+        <div className="search-wrapper">
+          <AutoSuggest
+            data={allPokemon}
+            userValue={userValue}
+            show={showList}
+            handleFocus={this.handleFocus}
+            handleBlur={this.handleBlur}
+            handleChange={this.handleChange}
+            handleInputClick={this.handleInputClick}
+            handleButtonClick={this.handleButtonClick}
+          />
+        </div>
         <div className="card-container">
           {pokemonSelected.map((pokemon) => {
             return (
