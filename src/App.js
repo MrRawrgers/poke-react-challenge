@@ -32,9 +32,10 @@ class App extends Component {
   }
 
   handleChange = (event) => {
+    let capitalise = this.handleCapitalize(event.target.value)
     this.setState({
-      userValue: this.handleCapitalize(event.target.value),
-      selectedIndex: this.state.allPokemon.findIndex((el) => el.name === event.target.value)
+      userValue: capitalise,
+      selectedIndex: this.state.allPokemon.findIndex((el) => el.name === capitalise)
     });
   };
 
@@ -51,56 +52,46 @@ class App extends Component {
   }
 
   handleButtonClick = async (data) => {
+
     if (this.state.selectedIndex < 0 || this.state.selectedIndex === null) {
       this.setState({
         showWarning: true,
       })
     }
     else {
+      this.setState({ userValue: "" })
       const response = await fetch(data[this.state.selectedIndex].url);
       const info = await response.json();
       // console.log(info) <----- uncomment this to see what data you get from this fetch request
       if (this.state.pokemonSelected.length < 4) {
-        let poke = info.name;
-        let capital = poke.charAt(0).toUpperCase();
-        let split = poke.split("")
-        split.splice(0, 1, capital)
-        let pokemon = split.join('')
-        info.name = pokemon
+
+
+        info.name = this.handleCapitalize(info.name)
         let array = this.state.pokemonSelected
         let found = false;
+
         for (var i = 0; i < array.length; i++) {
-          if (array[i].name === pokemon) {
+          if (array[i].name === info.name) {
             found = true;
             break;
           }
         }
         if (found === true) {
           return;
-        } else {
+        }
+        else {
           array.push(info)
           this.setState({ pokemonSelected: array });
 
-          this.setState({ userValue: "" })
-          const response = await fetch(data[this.state.selectedIndex].url);
-          const info = await response.json();
-          // console.log(info) <----- uncomment this to see what data you get from this fetch request
-          if (this.state.pokemonSelected.length < 4) {
-            info.name = this.handleCapitalize(info.name)
-            let array = this.state.pokemonSelected
-            let found = false;
-            for (var i = 0; i < array.length; i++) {
-              if (array[i].name === info.name) {
-                found = true;
-                break;
 
-              }
-            }
-          }
+
+
+
         }
       }
     }
-  };
+  }
+
 
   handleFocusOne = () => {
     this.setState({
