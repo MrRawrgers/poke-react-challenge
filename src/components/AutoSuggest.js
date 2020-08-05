@@ -5,7 +5,7 @@ const AutoSuggest = props => {
 
   return (
     <div className="searchlistcontainer">
-      <input onFocus={props.handleFocus} onBlur={props.handleBlur} onChange={props.handleChange} value={props.userValue} />
+      <input spellCheck="false" onFocus={props.handleFocus} onBlur={props.handleBlur} onChange={props.handleChange} value={props.userValue} />
       <div className="divide"></div>
       <button
         onClick={() => {
