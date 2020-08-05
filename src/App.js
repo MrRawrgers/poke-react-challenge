@@ -34,7 +34,10 @@ class App extends Component {
   }
 
   handleChange = (event) => {
-    this.setState({ userValue: event.target.value });
+    this.setState({
+      userValue: event.target.value,
+      selectedIndex: this.state.allPokemon.findIndex((el) => el.name === event.target.value)
+    });    
   };
 
   handleInputClick = async (selectedName, index) => {
