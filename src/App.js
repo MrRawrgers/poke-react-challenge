@@ -57,7 +57,6 @@ class App extends Component {
     if (this.state.pokemonSelected.length < 4) {
       info.name = this.handleCapitalize(info.name)
       let array = this.state.pokemonSelected
- 
       let found = false;
       for (var i = 0; i < array.length; i++) {
         if (array[i].name === info.name) {
