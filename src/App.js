@@ -45,6 +45,7 @@ class App extends Component {
   };
 
   handleButtonClick = async (data) => {
+    this.setState({userValue: ""})
     const response = await fetch(data[this.state.selectedIndex].url);
     const info = await response.json();
     // console.log(info) <----- uncomment this to see what data you get from this fetch request
@@ -56,6 +57,7 @@ class App extends Component {
       let pokemon = split.join('')
       info.name = pokemon
       let array = this.state.pokemonSelected
+ 
       let found = false;
       for (var i = 0; i < array.length; i++) {
         if (array[i].name === pokemon) {
