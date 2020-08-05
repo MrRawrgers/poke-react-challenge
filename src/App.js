@@ -50,6 +50,7 @@ class App extends Component {
   }
 
   handleButtonClick = async (data) => {
+    this.setState({userValue: ""})
     const response = await fetch(data[this.state.selectedIndex].url);
     const info = await response.json();
     // console.log(info) <----- uncomment this to see what data you get from this fetch request
