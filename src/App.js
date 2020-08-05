@@ -9,7 +9,8 @@ class App extends Component {
     userValue: "",
     selectedIndex: null,
     pokemonSelected: [],
-    showList: false
+    showList: false,
+    showWarning: false
   };
 
   //this is a React lifecycle method (part of react)
@@ -45,44 +46,89 @@ class App extends Component {
   };
 
   handleButtonClick = async (data) => {
-    const response = await fetch(data[this.state.selectedIndex].url);
-    const info = await response.json();
-    // console.log(info) <----- uncomment this to see what data you get from this fetch request
-    if (this.state.pokemonSelected.length < 4) {
-      let poke = info.name;
-      let capital = poke.charAt(0).toUpperCase();
-      let split = poke.split("")
-      split.splice(0, 1, capital)
-      let pokemon = split.join('')
-      info.name = pokemon
-      let array = this.state.pokemonSelected
-      let found = false;
-      for (var i = 0; i < array.length; i++) {
-        if (array[i].name === pokemon) {
-          found = true;
-          break;
+    console.log(this.state.selectedIndex)
+    if (this.state.selectedIndex < 0 || this.state.selectedIndex === null) {
+      this.setState({
+        showWarning: true,
+      })
+    }
+    else {
+      const response = await fetch(data[this.state.selectedIndex].url);
+      const info = await response.json();
+      // console.log(info) <----- uncomment this to see what data you get from this fetch request
+      if (this.state.pokemonSelected.length < 4) {
+        let poke = info.name;
+        let capital = poke.charAt(0).toUpperCase();
+        let split = poke.split("")
+        split.splice(0, 1, capital)
+        let pokemon = split.join('')
+        info.name = pokemon
+        let array = this.state.pokemonSelected
+        let found = false;
+        for (var i = 0; i < array.length; i++) {
+          if (array[i].name === pokemon) {
+            found = true;
+            break;
+          }
         }
-      }
-      if (found === true) {
-        return;
-      } else {
-        array.push(info)
-        this.setState({ pokemonSelected: array });
+        if (found === true) {
+          return;
+        } else {
+          array.push(info)
+          this.setState({ pokemonSelected: array });
+        }
       }
     }
   };
 
-  handleFocus = () => {
+
+  handleFocusOne = () => {
     this.setState({
       showList: true,
+      showWarning: false
     })
   }
+
+  handleWarning = () => {
+    this.setState({
+      showWarning: false,
+      userValue: "",
+      showList: true
+    })
+  }
+
+  handleFocus = () => {
+    const list = this.state.allPokemon
+    const input = this.state.userValue
+    for (let i = 0; i < list.length; i++) {
+      if (input === "" || input === list[i].name) {
+        this.handleFocusOne()
+      }
+      else if (input !== list[i].name) {
+        this.handleWarning()
+      }
+    }
+  }
+
+
+  // handleFocus = () => {
+  //   if (this.state.userValue === "") {
+  //     this.setState({
+  //       showList: true,
+  //     })
+  //   }
+  //   else if (this.state.userValue.length > 1) {
+  //     this.handleWarning()
+  //   }
+  // }
 
   handleBlur = (e) => {
     this.setState({
       showList: false,
     })
   }
+
+
 
   handleDelete = (id) => {
     this.setState({
@@ -97,7 +143,7 @@ class App extends Component {
   }
 
   render() {
-    const { allPokemon, userValue, pokemonSelected, showList } = this.state;
+    const { allPokemon, userValue, pokemonSelected, showList, showWarning } = this.state;
     return (
       <div className="background">
         <div className="search-wrapper">
@@ -105,6 +151,7 @@ class App extends Component {
             data={allPokemon}
             userValue={userValue}
             show={showList}
+            warning={showWarning}
             handleFocus={this.handleFocus}
             handleBlur={this.handleBlur}
             handleChange={this.handleChange}

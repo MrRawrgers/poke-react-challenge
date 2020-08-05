@@ -6,6 +6,9 @@ const AutoSuggest = props => {
     <div className="searchlistcontainer">
       <input spellCheck="false" onFocus={props.handleFocus} onBlur={props.handleBlur} onChange={props.handleChange} value={props.userValue} />
       <div className="divide"></div>
+      <div className="not-poke">
+        {props.warning ? <h1 className="warning">NOT A POKEMON! TRY AGAIN!</h1> : null}
+      </div>
       <button
         onClick={() => {
           props.handleButtonClick(props.data);
@@ -21,6 +24,8 @@ const AutoSuggest = props => {
       >
         Reset!
           </button>
+
+
       {props.show ? <div className="drop-down">
         {props.data ? (
           props.data.map((pokemon, index) => {
