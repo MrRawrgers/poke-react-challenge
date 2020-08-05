@@ -22,10 +22,7 @@ class App extends Component {
 
     if (data) {
       for (let i = 0; i < data.results.length; i++) {
-        let capital = data.results[i].name.charAt(0).toUpperCase();
-        let split = data.results[i].name.split("")
-        split.splice(0, 1, capital)
-        data.results[i].name = split.join('')
+        data.results[i].name = this.handleCapitalize(data.results[i].name)
       }
       data.results.sort(function (a, b) {
         return a.name.localeCompare(b.name);
@@ -36,7 +33,7 @@ class App extends Component {
 
   handleChange = (event) => {
     this.setState({
-      userValue: event.target.value,
+      userValue: this.handleCapitalize(event.target.value),
       selectedIndex: this.state.allPokemon.findIndex((el) => el.name === event.target.value)
     });
   };
@@ -45,8 +42,15 @@ class App extends Component {
     this.setState({ userValue: selectedName, selectedIndex: index });
   };
 
+  handleCapitalize = (p) => {
+    let split = p.split("")
+    let capital = p.charAt(0).toUpperCase();
+    let end = split.slice(1).join('').toLowerCase()
+    p = capital + end
+    return p
+  }
+
   handleButtonClick = async (data) => {
-    console.log(this.state.selectedIndex)
     if (this.state.selectedIndex < 0 || this.state.selectedIndex === null) {
       this.setState({
         showWarning: true,
@@ -76,11 +80,27 @@ class App extends Component {
         } else {
           array.push(info)
           this.setState({ pokemonSelected: array });
+
+          this.setState({ userValue: "" })
+          const response = await fetch(data[this.state.selectedIndex].url);
+          const info = await response.json();
+          // console.log(info) <----- uncomment this to see what data you get from this fetch request
+          if (this.state.pokemonSelected.length < 4) {
+            info.name = this.handleCapitalize(info.name)
+            let array = this.state.pokemonSelected
+            let found = false;
+            for (var i = 0; i < array.length; i++) {
+              if (array[i].name === info.name) {
+                found = true;
+                break;
+
+              }
+            }
+          }
         }
       }
     }
   };
-
 
   handleFocusOne = () => {
     this.setState({
@@ -110,17 +130,6 @@ class App extends Component {
     }
   }
 
-
-  // handleFocus = () => {
-  //   if (this.state.userValue === "") {
-  //     this.setState({
-  //       showList: true,
-  //     })
-  //   }
-  //   else if (this.state.userValue.length > 1) {
-  //     this.handleWarning()
-  //   }
-  // }
 
   handleBlur = (e) => {
     this.setState({
