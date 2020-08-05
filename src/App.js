@@ -44,8 +44,8 @@ class App extends Component {
   handleCapitalize = (p) => {
     let split = p.split("")
     let capital = p.charAt(0).toUpperCase();
-    split.splice(0, 1, capital)
-    p = split.join('')
+    let end = split.slice(1).join('').toLowerCase()
+    p = capital + end
     return p
   }
 
