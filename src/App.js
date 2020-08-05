@@ -31,9 +31,10 @@ class App extends Component {
   }
 
   handleChange = (event) => {
+    let capitalise = this.handleCapitalize(event.target.value)
     this.setState({
-      userValue: this.handleCapitalize(event.target.value),
-      selectedIndex: this.state.allPokemon.findIndex((el) => el.name === event.target.value)
+      userValue: capitalise,
+      selectedIndex: this.state.allPokemon.findIndex((el) => el.name === capitalise)
     });
   };
 
@@ -50,7 +51,7 @@ class App extends Component {
   }
 
   handleButtonClick = async (data) => {
-    this.setState({userValue: ""})
+    this.setState({ userValue: "" })
     const response = await fetch(data[this.state.selectedIndex].url);
     const info = await response.json();
     // console.log(info) <----- uncomment this to see what data you get from this fetch request
