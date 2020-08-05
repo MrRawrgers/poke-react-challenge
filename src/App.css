@@ -13,7 +13,7 @@ body, html {
 }
 .drop-down {
   position: fixed;
-  top: 100px;
+  top: 143px;
   width: 50vw;
   height: 700px;
   display: flex;

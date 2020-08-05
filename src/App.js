@@ -19,10 +19,7 @@ class App extends Component {
 
     if (data) {
       for (let i = 0; i < data.results.length; i++) {
-        let capital = data.results[i].name.charAt(0).toUpperCase();
-        let split = data.results[i].name.split("")
-        split.splice(0, 1, capital)
-        data.results[i].name = split.join('')
+        data.results[i].name = this.handleCapitalize(data.results[i].name)
       }
       data.results.sort(function (a, b) {
         return a.name.localeCompare(b.name);
@@ -34,31 +31,34 @@ class App extends Component {
 
   handleChange = (event) => {
     this.setState({
-      userValue: event.target.value,
+      userValue: this.handleCapitalize(event.target.value),
       selectedIndex: this.state.allPokemon.findIndex((el) => el.name === event.target.value)
-    });    
+    });
   };
 
   handleInputClick = async (selectedName, index) => {
     this.setState({ userValue: selectedName, selectedIndex: index });
   };
 
+  handleCapitalize = (p) => {
+    let split = p.split("")
+    let capital = p.charAt(0).toUpperCase();
+    split.splice(0, 1, capital)
+    p = split.join('')
+    return p
+  }
+
   handleButtonClick = async (data) => {
     const response = await fetch(data[this.state.selectedIndex].url);
     const info = await response.json();
 
     if (this.state.pokemonSelected.length < 4) {
-      let poke = info.name;
-      let capital = poke.charAt(0).toUpperCase();
-      let split = poke.split("")
-      split.splice(0, 1, capital)
-      let pokemon = split.join('')
-      info.name = pokemon
+      info.name = this.handleCapitalize(info.name)
       let array = this.state.pokemonSelected
       let found = false;
 
       for (var i = 0; i < array.length; i++) {
-        if (array[i].name === pokemon) {
+        if (array[i].name === info.name) {
           found = true;
           break;
         }
@@ -93,6 +93,10 @@ class App extends Component {
     })
   }
 
+  handleReset = () => {
+    window.location.reload(false);
+  }
+
   render() {
     const { allPokemon, userValue, pokemonSelected, showList } = this.state;
 
@@ -111,6 +115,7 @@ class App extends Component {
             handleChange={this.handleChange}
             handleInputClick={this.handleInputClick}
             handleButtonClick={this.handleButtonClick}
+            handleReset={() => this.handleReset()}
           />
         </div>
         <div className="card-container">
