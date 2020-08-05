@@ -26,7 +26,6 @@ class App extends Component {
       });
     }
     this.setState({ allPokemon: data.results });
-    console.log(this.state.allPokemon);
   }
 
   handleChange = (event) => {

@@ -4,77 +4,71 @@ import "./AutoSuggestMW.css";
 
 let pokemons = [];
 
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
-function escapeRegexCharacters(str) {
-return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const escapeRegexCharacters = (str) => {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function getSuggestions(value) {
-const escapedValue = escapeRegexCharacters(value.trim());
+const getSuggestions = (value) => {
+    const escapedValue = escapeRegexCharacters(value.trim());
 
-if (escapedValue === '') {
-    return [];
+    if (escapedValue === '') {
+        return [];
+    }
+
+    const regex = new RegExp('^' + escapedValue, 'i');
+
+    return pokemons.filter(pokemon => regex.test(pokemon.name));
 }
 
-const regex = new RegExp('^' + escapedValue, 'i');
-
-return pokemons.filter(pokemon => regex.test(pokemon.name));
+const getSuggestionValue = (suggestion) => {
+    return suggestion.name;
 }
 
-function getSuggestionValue(suggestion) {
-return suggestion.name;
-}
-
-function renderSuggestion(suggestion) {
-return (
-    <span>{suggestion.name}</span>
-);
+const renderSuggestion = (suggestion) => {
+    return (
+        <span>
+            {suggestion.name}
+        </span>
+    );
 }
 
 class AutoSuggestMW extends React.Component {
     state = {
-        value: '',
+        value: "",
         suggestions: []
     };
 
     onChange = (event, { newValue, method }) => {
-
         pokemons = this.props.data;
-        console.log(this.props.data);
 
-        this.setState({
-        value: newValue
-        });
+        this.setState({ value: newValue });
     };
 
     onSuggestionsFetchRequested = ({ value }) => {
-        this.setState({
-        suggestions: getSuggestions(value)
-        });
+        this.setState({ suggestions: getSuggestions(value) });
     };
 
     onSuggestionsClearRequested = () => {
-        this.setState({
-        suggestions: []
-        });
+        this.setState({ suggestions: [] });
     };
 
     render() {
         const { value, suggestions } = this.state;
         const inputProps = {
-        placeholder: "Type 'c'",
-        value,
-        onChange: this.onChange,
+            placeholder: "Type 'c'",
+            value,
+            onChange: this.onChange,
         };
 
         return (
-        <Autosuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={inputProps} />
+            <Autosuggest
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                getSuggestionValue={getSuggestionValue}
+                renderSuggestion={renderSuggestion}
+                inputProps={inputProps}
+            />
         );
     }
 }
