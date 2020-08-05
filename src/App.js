@@ -37,7 +37,7 @@ class App extends Component {
     this.setState({
       userValue: event.target.value,
       selectedIndex: this.state.allPokemon.findIndex((el) => el.name === event.target.value)
-    });    
+    });
   };
 
   handleInputClick = async (selectedName, index) => {
@@ -92,6 +92,10 @@ class App extends Component {
     })
   }
 
+  handleReset = () => {
+    window.location.reload(false);
+  }
+
   render() {
     const { allPokemon, userValue, pokemonSelected, showList } = this.state;
     return (
@@ -106,6 +110,7 @@ class App extends Component {
             handleChange={this.handleChange}
             handleInputClick={this.handleInputClick}
             handleButtonClick={this.handleButtonClick}
+            handleReset={() => this.handleReset()}
           />
         </div>
         <div className="card-container">

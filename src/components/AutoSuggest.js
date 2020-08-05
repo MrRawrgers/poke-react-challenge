@@ -13,8 +13,14 @@ const AutoSuggest = props => {
       >
         Search for Pokemon data
       </button>
-
-
+      <div className="divide"></div>
+      <button
+        onClick={() => {
+          props.handleReset()
+        }}
+      >
+        Reset!
+          </button>
       {props.show ? <div className="drop-down">
         {props.data ? (
           props.data.map((pokemon, index) => {
