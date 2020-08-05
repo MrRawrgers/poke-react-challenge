@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AutoSuggestMW from "./components/AutoSuggestMW";
 import AutoSuggest from "./components/AutoSuggest";
 import InfoCard from "./components/InfoCard";
 import "./App.css";
@@ -31,9 +32,13 @@ class App extends Component {
       });
     }
     this.setState({ allPokemon: data.results });
+    console.log(this.state.allPokemon);
   }
 
   handleChange = (event) => {
+
+    
+
     this.setState({
       userValue: event.target.value,
       selectedIndex: this.state.allPokemon.findIndex((el) => el.name === event.target.value)
@@ -48,6 +53,11 @@ class App extends Component {
     const response = await fetch(data[this.state.selectedIndex].url);
     const info = await response.json();
     // console.log(info) <----- uncomment this to see what data you get from this fetch request
+
+   
+    console.log(this.state.allPokemon[0].name + " gareth!")
+
+    
     if (this.state.pokemonSelected.length < 4) {
       let poke = info.name;
       let capital = poke.charAt(0).toUpperCase();
@@ -56,6 +66,10 @@ class App extends Component {
       let pokemon = split.join('')
       info.name = pokemon
       let array = this.state.pokemonSelected
+
+      
+     
+
       let found = false;
       for (var i = 0; i < array.length; i++) {
         if (array[i].name === pokemon) {
@@ -94,9 +108,21 @@ class App extends Component {
 
   render() {
     const { allPokemon, userValue, pokemonSelected, showList } = this.state;
+
+    
+      
+    
+
     return (
       <div className="background">
         <div className="search-wrapper">
+
+          
+          <AutoSuggestMW
+            data={this.state.allPokemon}
+          />
+
+
           <AutoSuggest
             data={allPokemon}
             userValue={userValue}
